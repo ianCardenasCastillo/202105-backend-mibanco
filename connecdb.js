@@ -1,6 +1,6 @@
 var mongoose = require('mongoose'); //ODM para mongoDB NodeJs
 
-mongoose.connect('mongodb://localhost/'+process.env.MONGO_DB);
+mongoose.connect('mongodb://localhost/banco_ripley');
 mongoose.Promise=global.Promise;
 var db = mongoose.connection;
 
