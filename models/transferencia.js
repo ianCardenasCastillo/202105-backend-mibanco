@@ -14,7 +14,7 @@ var transferenciaSchema = new Schema({
  * @param {Number} monto Monto de Transferencia
  * @returns {Document} Retorna el documento Transferencia
  */
-transferenciaSchema.statics.createInstance = (destinatarioId,monto) => {
+transferenciaSchema.statics.createInstance = function(destinatarioId,monto){
     return new this({
         destinatario:destinatarioId,
         monto:monto,
@@ -27,7 +27,7 @@ transferenciaSchema.statics.createInstance = (destinatarioId,monto) => {
  * @param {Schema} transferencia Instancia de la transferencia
  * @param {Callback} cb Callback del add
  */
-transferenciaSchema.statics.add = (transferencia,cb) => {
+transferenciaSchema.statics.add = function(transferencia,cb) {
     this.create(transferencia,cb)
 }
 
@@ -36,8 +36,8 @@ transferenciaSchema.statics.add = (transferencia,cb) => {
  * @param {Callback} cb Callback del add
  * @returns {Callback} cb Callback del find
  */
-transferenciaSchema.statics.listAll = (cb) => {
-    return this.find({},cb)
+transferenciaSchema.statics.listAll= function(cb){
+    return this.find({},cb).populate('destinatario')
 };
 
 module.exports = mongoose.model('Transferencia', transferenciaSchema);

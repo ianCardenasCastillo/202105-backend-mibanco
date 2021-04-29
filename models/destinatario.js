@@ -2,12 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var destinatarioSchema = new Schema({
-    nombre: String,
-    rut: String,
-    correo: String,
+    nombre: { type: String, uppercase: true },
+    rut: { type: String, uppercase: true },
+    correo: { type: String, uppercase: true },
     telefono: String,
     bank_id: String,
-    tipo_cuenta: String,
+    tipo_cuenta: { type: String, uppercase: true },
     numero_cuenta: String
 })
 
@@ -24,9 +24,10 @@ var destinatarioSchema = new Schema({
  * @param {String} numero_cuenta Numero de la cuenta
  * @returns {Document} Retorna un destinatario Document
  */
-destinatarioSchema.statics.createInstance = (nombre,rut,correo,telefono,bank_id,tipo_cuenta,numero_cuenta) => {
+destinatarioSchema.statics.createInstance = function(nombre,rut,correo,telefono,bank_id,tipo_cuenta,numero_cuenta) {
     return new this({
         nombre:nombre,
+        rut:rut,
         correo:correo,
         telefono:telefono,
         bank_id:bank_id,
@@ -41,8 +42,9 @@ destinatarioSchema.statics.createInstance = (nombre,rut,correo,telefono,bank_id,
  * @param {Schema} destinatario Instancia del destinatario
  * @param {Callback} cb Callback del add
  */
-destinatarioSchema.statics.add = (destinatario,cb) => {
+destinatarioSchema.statics.add = function(destinatario,cb) {
     this.create(destinatario,cb)
+    // destinatario.save(cb);
 }
 
 /**
@@ -51,7 +53,7 @@ destinatarioSchema.statics.add = (destinatario,cb) => {
  * @param {Callback} cb Callback del Find
  * @returns Retorna un DocumentQuery
  */
-destinatarioSchema.statics.findByName = (nombre,cb) => {
+destinatarioSchema.statics.findByName = function(nombre,cb) {
     return this.find({nombre:{ $regex: '.*' + nombre + '.*' }},cb)
 };
 
