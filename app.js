@@ -1,18 +1,20 @@
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var {db: connectdb} = require('./connecdb');
 
-// var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
+var indexRouter = require('./routes/index');
 
 var destinatarioRouter = require('./routes/destinatario')
 var trasnferenciaRouter = require('./routes/transferencia')
+var tipoCuentaRouter = require('./routes/tipocuenta')
 
 var app = express();
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,10 +26,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
+app.use('/', indexRouter);
 app.use('/api/v1/destinatario', destinatarioRouter);
 app.use('/api/v1/transferencia', trasnferenciaRouter);
+app.use('/api/v1/tipo-cuenta', tipoCuentaRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

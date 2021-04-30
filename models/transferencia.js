@@ -37,7 +37,7 @@ transferenciaSchema.statics.add = function(transferencia,cb) {
  * @returns {Callback} cb Callback del find
  */
 transferenciaSchema.statics.listAll= function(cb){
-    return this.find({},cb).populate('destinatario')
+    return this.find({},cb).populate({path:'destinatario',select:'nombre rut bank_id tipo_cuenta',populate:{path:'tipo_cuenta'}})
 };
 
 module.exports = mongoose.model('Transferencia', transferenciaSchema);

@@ -7,7 +7,7 @@ var destinatarioSchema = new Schema({
     correo: { type: String, uppercase: true },
     telefono: String,
     bank_id: String,
-    tipo_cuenta: { type: String, uppercase: true },
+    tipo_cuenta: { type: mongoose.Schema.Types.ObjectId, ref: 'TipoCuenta'},
     numero_cuenta: String
 })
 
