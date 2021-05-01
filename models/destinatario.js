@@ -2,13 +2,26 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var destinatarioSchema = new Schema({
-    nombre: { type: String, uppercase: true },
-    rut: { type: String, uppercase: true },
+    nombre: {
+        type: String, 
+        uppercase: true, 
+        validate: {
+            validator: function (v) {
+                return v.length>0;
+            },
+            message: props => `${props.value} Nombre vacio`
+        }
+    },
+    rut: { 
+        type: String, 
+        uppercase: true
+    },
     correo: { type: String, uppercase: true },
     telefono: String,
-    bank_id: String,
-    tipo_cuenta: { type: mongoose.Schema.Types.ObjectId, ref: 'TipoCuenta'},
-    numero_cuenta: String
+    bankId: String,
+    tipoCuenta: { type: mongoose.Schema.Types.ObjectId, ref: 'TipoCuenta' },
+    numeroCuenta: String,
+    usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }
 })
 
 /**
@@ -19,20 +32,20 @@ var destinatarioSchema = new Schema({
  * @param {String} rut Rut del destinatario
  * @param {String} correo Correo del destinatario
  * @param {String} telefono Telefono del destinatario
- * @param {String} bank_id Id del banco a transferir
- * @param {String} tipo_cuenta Tipo de cuenta 
- * @param {String} numero_cuenta Numero de la cuenta
+ * @param {String} bankId Id del banco a transferir
+ * @param {String} tipoCuenta Tipo de cuenta 
+ * @param {String} numeroCuenta Numero de la cuenta
  * @returns {Document} Retorna un destinatario Document
  */
-destinatarioSchema.statics.createInstance = function(nombre,rut,correo,telefono,bank_id,tipo_cuenta,numero_cuenta) {
+destinatarioSchema.statics.createInstance = function (nombre, rut, correo, telefono, bankId, tipoCuenta, numeroCuenta) {
     return new this({
-        nombre:nombre,
-        rut:rut,
-        correo:correo,
-        telefono:telefono,
-        bank_id:bank_id,
-        tipo_cuenta:tipo_cuenta,
-        numero_cuenta:numero_cuenta
+        nombre: nombre,
+        rut: rut,
+        correo: correo,
+        telefono: telefono,
+        bankId: bankId,
+        tipoCuenta: tipoCuenta,
+        numeroCuenta: numeroCuenta
     })
 }
 
@@ -42,8 +55,8 @@ destinatarioSchema.statics.createInstance = function(nombre,rut,correo,telefono,
  * @param {Schema} destinatario Instancia del destinatario
  * @param {Callback} cb Callback del add
  */
-destinatarioSchema.statics.add = function(destinatario,cb) {
-    this.create(destinatario,cb)
+destinatarioSchema.statics.add = function (destinatario, cb) {
+    this.create(destinatario, cb)
     // destinatario.save(cb);
 }
 
@@ -53,8 +66,8 @@ destinatarioSchema.statics.add = function(destinatario,cb) {
  * @param {Callback} cb Callback del Find
  * @returns Retorna un DocumentQuery
  */
-destinatarioSchema.statics.findByName = function(nombre,cb) {
-    return this.find({nombre:{ $regex: '.*' + nombre + '.*' }},cb)
+destinatarioSchema.statics.findByName = function (nombre,usuario, cb) {
+    return this.find({ nombre: { $regex: '.*' + nombre + '.*' }, usuario: usuario }, cb)
 };
 
 module.exports = mongoose.model('Destinatario', destinatarioSchema);

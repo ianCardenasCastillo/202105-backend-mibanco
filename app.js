@@ -12,6 +12,8 @@ var indexRouter = require('./routes/index');
 var destinatarioRouter = require('./routes/destinatario')
 var trasnferenciaRouter = require('./routes/transferencia')
 var tipoCuentaRouter = require('./routes/tipocuenta')
+var usuarioRouter = require('./routes/usuario')
+var loginRouter = require('./routes/login')
 
 var app = express();
 app.use(cors());
@@ -30,6 +32,8 @@ app.use('/', indexRouter);
 app.use('/api/v1/destinatario', destinatarioRouter);
 app.use('/api/v1/transferencia', trasnferenciaRouter);
 app.use('/api/v1/tipo-cuenta', tipoCuentaRouter);
+app.use('/api/v1/usuario', usuarioRouter);
+app.use('/api/v1/login', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -2,7 +2,15 @@ var mongoose = require('mongoose'); //ODM para mongoDB NodeJs
 
 var TipoCuenta = require('./models/tipoCuenta')
 
-mongoose.connect('mongodb://localhost/banco_ripley');
+var user=process.env.MONGO_USER
+var password=process.env.MONGO_PASSWORD
+var host=process.env.MONGO_HOST
+var db=process.env.MONGO_DB
+
+const url = "mongodb+srv://"+user+":"+password+"@"+host+"/"+db+"?retryWrites=true&w=majority";
+
+
+mongoose.connect(url, { useNewUrlParser: true,useUnifiedTopology: true });
 mongoose.Promise=global.Promise;
 var db = mongoose.connection;
 

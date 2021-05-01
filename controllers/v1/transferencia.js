@@ -15,7 +15,8 @@ module.exports =()=>({
         })
     },
     transferenciaGet: (req,res)=>{
-        Trasnferencia.listAll((err,success)=>{
+        let usuario = req.params.usuario;
+        Trasnferencia.listAll(usuario,(err,success)=>{
             if (err) res.status(500).json({error:err});
             return res.status(200).json({transferencias:success})
         })

@@ -1,0 +1,21 @@
+version: '3'
+services:
+  api:
+    container_name: backend-ripley
+    build:
+        context: ./
+        dockerfile: Dockerfile
+    ports:
+        - "3000:3000"
+    volumes:
+        - ./:/src
+    environment:
+        MONGO_HOST: cluster0.esy3v.mongodb.net
+        MONGO_PASSWORD: Wt4ZUQjY64eOipDL
+        MONGO_USER: usuario_ripley
+        MONGO_DB: banco_ripley
+        MONGO_PORT: 27017
+        SECRET_KEY_1: OIxDrjKzj6ltTg2SoiqT1K0cTDUSzzIH
+        SECRET_KEY_2: 1PkcUm13C8EuiTbIN3uhF1suYUdiaXpx
+        DOMAIN: localhost
+        
