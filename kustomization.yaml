@@ -1,0 +1,3 @@
+resources:
+- ./mi-banco-deployment.yaml
+- ./mi-banco-service.yaml
