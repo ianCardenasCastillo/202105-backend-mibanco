@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-mibanco
+  labels:
+    app: backend-mibanco
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-mibanco
+  template:
+    metadata:
+      labels:
+        app: backend-mibanco
+    spec:
+      containers:
+      - name: backend-mibanco
+        image: ticscardenas/backend-mibanco:latest
+        command: ["npm"]
+        args: ["start"]
+        ports:
+        - containerPort: 3000 
+        env:
+        - name: MONGO_HOST  
+          value: "cluster0.esy3v.mongodb.net"
+        - name: MONGO_PASSWORD  
+          value: Wt4ZUQjY64eOipDL
+        - name: MONGO_USER  
+          value: usuario_ripley
+        - name: MONGO_DB  
+          value: banco_ripley
+        - name: MONGO_PORT  
+          value: "27017"
+      imagePullSecrets:
+      - name: regcred
