@@ -1,9 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Destinatario = require('./destinatario');
+var Usuario = require('./usuario');
 
 var transferenciaSchema = new Schema({
     destinatario: { type: mongoose.Schema.Types.ObjectId, ref: 'Destinatario'},
+    usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario'},
     monto: Number
 })
 

@@ -3,6 +3,7 @@ var Trasnferencia = require('../../models/transferencia');
 module.exports =()=>({
     transferenciaCreate: (req,res)=>{
         let transferencia = new Trasnferencia({
+            usuario:req.body.usuario,
             destinatario:req.body.destinatario,
             monto:req.body.monto,
         });
